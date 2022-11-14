@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton';
+import {NavLink} from 'react-router-dom'
 
 const Products = () => {
     const [data, setData] =useState([])
@@ -7,7 +9,7 @@ const Products = () => {
     let componentMounted = true
     useEffect(()=>{
         const getProducts = async () => {
-            setLoading(true)
+            // setLoading(true)
             const response = await fetch("https://fakestoreapi.com/products")
             if(componentMounted){
                 setData(await response.clone().json());
@@ -23,7 +25,9 @@ const Products = () => {
     const Loading = () =>{
         return(
             <>
-                Loading...
+                <div className="col-md-3">
+                    <Skeleton height={350 } />
+                </div>
             </>
         )
     }
@@ -31,38 +35,39 @@ const Products = () => {
         return(
             <>
          
-<div className="buttons d-flex justify-content-center mb-5 pb-5">
-            <button className="btn btn-outline-dark">All</button>
-            <button className="btn bt-outline-dark">Men's Clothing</button>
-            <button className="btn bt-outline-dark">Women's Clothing</button>
-            <button className="btn bt-outline-dark">Jewelry</button>
-            <button className="btn bt-outline-dark">Electronic</button>
-            <button className="btn bt-outline-dark">Men's Clothing</button>
+            <div className="buttons d-flex justify-content-center mb-5 pb-5">
+            <button className="btn btn-outline-dark me-2" onClick={()=> setFilter(data)}>All</button>
+            <button className="btn bt-outline-dark me-2" 
+            // onClick={()=> filterProduct('mens clothing')}
+            >Men's Clothing</button>
+            <button className="btn bt-outline-dark me-2">Women's Clothing</button>
+            <button className="btn bt-outline-dark me-2">Jewelry</button>
+            <button className="btn bt-outline-dark me-2">Electronic</button>
+            <button className="btn bt-outline-dark me-2">Men's Clothing</button>
 
 
 
         </div>
         {filter.map((product) =>{
             return(
-                <>
-                    <div className='col-md-3'>
-                        <div className='card'>
-                            <img src={product.image} className="card-img-top" alt={product.title} />
+                
+                    <div className='col-md-3 mb-4' key={product.id}> 
+                        <div className='card h-100 text-center p-4' >
+                            <img src={product.image} className="card-img-top" alt={product.title} height="250px"/>
                             <div className="card-body">
-                                <h5 className="card-title">{product.title}</h5>
-                                <p className="card-text">
-                                    some quick example test to buildont he card title and make up the bu;k of the card's content.
-
+                                <h5 className="card-title mb-0">{product.title.substring(0, 12)}...</h5>
+                                <p className="card-text fw-bold">
+${product.price}
                                 </p>
-                                <a href="#" classNAme="btn btn-primary">
-                                    Go somewhere
-                                </a>
+                                <NavLink to={`/products/${product.id}`} className="btn btn-outline-dark">
+                                    Buy Now
+                                </NavLink>
                 
                             </div>
 
                         </div>
                     </div>
-                </>
+                
             )
         })}
         </>
