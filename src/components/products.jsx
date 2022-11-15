@@ -31,6 +31,10 @@ const Products = () => {
             </>
         )
     }
+    const filterProduct = (cat) =>{
+        const updatedList = data.filter((x)=>x.category === cat)
+        setFilter(updatedList)
+    }
     const ShowProducts = () =>{
         return(
             <>
@@ -38,12 +42,17 @@ const Products = () => {
             <div className="buttons d-flex justify-content-center mb-5 pb-5">
             <button className="btn btn-outline-dark me-2" onClick={()=> setFilter(data)}>All</button>
             <button className="btn bt-outline-dark me-2" 
-            // onClick={()=> filterProduct('mens clothing')}
+            onClick={()=> filterProduct("men's clothing")}
             >Men's Clothing</button>
-            <button className="btn bt-outline-dark me-2">Women's Clothing</button>
-            <button className="btn bt-outline-dark me-2">Jewelry</button>
-            <button className="btn bt-outline-dark me-2">Electronic</button>
-            <button className="btn bt-outline-dark me-2">Men's Clothing</button>
+            <button className="btn bt-outline-dark me-2"
+             onClick={()=> filterProduct("women's clothing")}
+             >Women's Clothing</button>
+            <button className="btn bt-outline-dark me-2"
+             onClick={()=> filterProduct("jewelry")}>Jewelry</button>
+            <button className="btn bt-outline-dark me-2"
+             onClick={()=> filterProduct("electronics")}
+            >Electronic</button>
+         
 
 
 
